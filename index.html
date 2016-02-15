@@ -1,1 +1,113 @@
-Hello World
+<!doctype html>
+<html>
+<head>
+    <title>Index</title>
+<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="bower_components/foundation/css/normalize.min.css" />
+<link rel="stylesheet" type="text/css" href="bower_components/foundation/css/foundation.min.css" />
+
+<style type="text/css">
+
+    #sidebar {
+        background-color: aqua;
+        height: 100%;
+
+
+    }
+
+
+    #details {
+        background-color: green;
+        height: 100%;
+    }
+
+    #others{
+        padding: 5px;
+        font-family: sans-serif;
+    }
+
+</style>
+
+</head>
+<body ng-app="myapp">
+
+<div class="columns large-2 medium-4 small-12" id="sidebar">
+    <div ng-controller="SidebarCtrl">
+        <item category = "{{item}}" ng-repeat="item in sideItems"></item>
+    </div>
+</div>
+<div class= "columns large-10 medium-8 small-12" id="details">
+
+</div>
+
+
+
+<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="bower_components/foundation/js/foundation.min.js"></script>
+<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+<script type="text/javascript">
+
+    cheatsheetData = {
+        "Git": [
+            "git init",
+            "git status",  
+            "git add README.md",   
+            "git commit -m 'updated README'",    
+            "git log",  
+            "git push origin master",  
+        ],
+        "AngularJS": [
+            "ng-init",
+            "ng-controller",  
+            "ng-cloak", 
+            "ng-repeat"    
+        ],
+        "Foundation": [
+            "large-1",
+            "large-2",
+            "large-3",
+            "large-4",
+            "large-5",
+            "large-6",
+            "medium-1",
+            "medium-2",
+            "medium-3",
+            "medium-4",
+            "medium-5",
+            "medium-6",
+            "small-1",
+            "small-2",
+            "small-3",
+            "small-4",
+            "small-5",
+            "small-6"
+        ]
+    }
+
+
+    app = angular.module('myapp',[]);
+
+    app.directive("item", function () {
+        return {
+            scope: {},
+            restrict: "E",
+            transclude: true, 
+            replace: true,
+            controller: "SidebarCtrl",
+            template: '<div class="others">{{category}}</div>',
+            link: function (scope, element, attr, ctrl, transclude) { 
+                scope.category = attr.category;
+            }
+        }
+    });
+
+
+    app.controller("SidebarCtrl", function($scope) {
+        $scope.sideItems = Object.keys(cheatsheetData);
+    });
+
+</script>
+
+
+</body>
+</html>
