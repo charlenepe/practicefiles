@@ -33,12 +33,12 @@
 
 <div class="columns large-2 medium-4 small-12" id="sidebar">
     <div ng-controller="SidebarCtrl">
-        <item category = "{{item}}" ng-repeat="item in sideItems"></item>
+        <item category = "{{ item }}" ng-repeat="item in sideItems"></item>
     </div>
 </div>
 <div class= "columns large-10 medium-8 small-12" id="details">
     <div ng-controller="DetailsCtrl">
-        <code ng-repeat="line in currentDetails" ng-bind-html="line">{{ line }}</code>
+        <code value="{{ value }}" ng-repeat="(key,value) in data"></code>
     </div>
 </div>
 
@@ -104,8 +104,34 @@
     });
 
 
+    app.directive("code", function () {
+        return {
+            scope: {},
+            restrict: "E",
+            transclude: true, 
+            replace: true,
+            controller: "DetailsCtrl",
+            template: '<div>{{ value }}</div>',
+            link: function (scope, element, attr, ctrl, transclude) { 
+                scope.value = attr.value;
+            }
+        }
+   });
+
+
+
     app.controller("SidebarCtrl", function($scope) {
         $scope.sideItems = Object.keys(cheatsheetData);
+    });
+
+    app.controller("DetailsCtrl", function($scope){
+        $scope.data = cheatsheetData;
+        $scope.key = Object.keys(cheatsheetData);
+
+
+
+
+
     });
 
 </script>
