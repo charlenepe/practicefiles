@@ -37,7 +37,9 @@
     </div>
 </div>
 <div class= "columns large-10 medium-8 small-12" id="details">
-
+    <div ng-controller="DetailsCtrl">
+        <code ng-repeat="line in currentDetails" ng-bind-html="line">{{ line }}</code>
+    </div>
 </div>
 
 
